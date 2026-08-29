@@ -1,32 +1,37 @@
-# Atelier Interior Design Studio 🏡✨
+# 🏡 Atelier Website (Full-Stack Interior Design Platform)
 
-A modern, minimalist, and responsive web application built for an interior design studio, showcasing luxury residential and commercial spaces with a sleek aesthetic.
-
----
-
-## 🚀 Features
-
-* **Interactive Gallery:** Dynamic thumbnail viewer allowing users to switch between main project angles seamlessly.
-* **Before & After Slider:** Interactive visual slider to demonstrate real interior transformation results.
-* **Project Showcase:** Detailed layout for living rooms, bedrooms, and commercial spaces.
-* **Responsive Design:** Optimized for seamless viewing across mobile, tablet, and desktop devices.
-* **Smooth Animations:** Integrated with Framer Motion for high-end UI transitions.
+A modern full-stack web application designed for interior design studios, showcasing stunning portfolios, before-and-after room makeovers, and interactive client experiences.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Framework:** [Next.js 15](https://nextjs.org/) (React Framework)
-* **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-* **Animations:** [Framer Motion](https://www.framer.com/motion/)
-* **Language:** TypeScript / JavaScript
+### **Frontend (Client-Side)**
+* **Framework:** [Next.js 15](https://next.js/) (React)
+* **Styling:** Tailwind CSS / Custom styling
+* **Animations:** Framer Motion
+* **Icons & UI:** Lucide React / Modern UI components
+
+### **Backend (Server-Side)**
+* **Framework:** Python, [Django](https://www.djangoproject.com/) & Django REST Framework (DRF)
+* **Database:** SQLite (Development)
+* **Media Management:** Django Media storage for project and makeover images
+* **CORS:** `django-cors-headers` for secure API communication
 
 ---
 
-## 📦 Getting Started Locally
+## 📁 Project Structure
 
-To run this project on your local machine, follow these steps:
-
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/sameera-kp/atelier-design-website.git](https://github.com/sameera-kp/atelier-design-website.git)
+```text
+interior-website/
+├── backend/            # Django REST API Backend
+│   ├── api/            # Django app for models, serializers, views
+│   ├── backend/        # Core Django settings and URLs
+│   ├── media/          # Uploaded project & makeover images
+│   └── venv/           # Python Virtual Environment
+├── interior-studio/    # Next.js Frontend Application
+│   ├── app/            # App router pages (Home, Projects, About, Contact)
+│   ├── components/     # Reusable UI components (Sliders, Navbar, Footer)
+│   ├── data/           # Static data & project listings
+│   └── public/         # Static assets and images
+└── .gitignore          # Git ignore configuration
