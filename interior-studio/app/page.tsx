@@ -22,7 +22,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("after");
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/interior-makeover/")
+    fetch("https://sameeranaf.pythonanywhere.com/api/interior-makeover/")
       .then((res) => res.json())
       .then((data) => {
         if (data && data.length > 0) {

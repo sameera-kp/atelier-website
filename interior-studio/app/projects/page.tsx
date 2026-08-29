@@ -10,7 +10,7 @@ export default function ProjectsPage() {
   const [backendProjects, setBackendProjects] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/projects/")
+    fetch("https://sameeranaf.pythonanywhere.com/api/projects/")
       .then((res) => res.json())
       .then((data) => {
         setBackendProjects(data);

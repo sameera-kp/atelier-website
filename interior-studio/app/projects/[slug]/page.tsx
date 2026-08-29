@@ -18,7 +18,7 @@ export default function ProjectDetail({ params }) {
       setProject(foundStatic);
       setLoading(false);
     } else {
-      fetch(`http://127.0.0.1:8000/api/projects/`)
+      fetch("https://sameeranaf.pythonanywhere.com/api/projects/")
         .then((res) => res.json())
         .then((data) => {
           const foundBackend = data.find((p) => p.slug === slug);
