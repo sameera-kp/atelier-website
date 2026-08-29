@@ -1,0 +1,19 @@
+# --- Python / Django (Backend) ---
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/db.sqlite3
+backend/.env
+
+# --- Next.js / Node (Frontend) ---
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.env
+frontend/.env.local
+
+# --- OS generated files ---
+.DS_Store
+Thumbs.db
