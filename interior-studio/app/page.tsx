@@ -200,7 +200,7 @@ export default function Home() {
             {/* Display Image based on active tab */}
             <div className="relative h-[450px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-xl border border-stone-200 bg-stone-100">
               <Image
-                src={activeTab === "before" ? `https://sameeranaf.pythonanywhere.com${makeoverData.before_image}` : `https://sameeranaf.pythonanywhere.com${makeoverData.after_image}`}
+                src={activeTab === "before" ? makeoverData.before_image : makeoverData.after_image}
                 alt="Makeover view"
                 fill
                 sizes="(max-width: 1200px) 100vw, 1200px"

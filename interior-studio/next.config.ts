@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         port: '8000',
         pathname: '/media/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'sameeranaf.pythonanywhere.com',
+        pathname: '/media/**',
+      },
     ],
     dangerouslyAllowLocalIP: true,
   },
