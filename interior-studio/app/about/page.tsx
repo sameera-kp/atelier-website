@@ -30,7 +30,7 @@ export default function AboutPage() {
         className="relative h-[50vh] md:h-[65vh] w-full mb-24 overflow-hidden rounded-sm bg-neutral-900"
       >
         <Image 
-          src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600" 
+          src="/projects/villa.jpg"
           alt="Studio Philosophy Interior" 
           fill 
           className="object-cover"
