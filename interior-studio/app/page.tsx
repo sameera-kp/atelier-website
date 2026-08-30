@@ -15,18 +15,61 @@ const sampleImages = [
   "/projects/Living-Room-Dining-Room-5.webp",
 ];
 
+// தனிത്തനി മേക്കോവർ കാർഡുകൾക്കായി ഒരു ചെറിയ കോമ്പോണന്റ്
+function MakeoverCard({ item }: { item: any }) {
+  const [activeTab, setActiveTab] = useState("after");
+
+  return (
+    <section className="my-20">
+      <div className="text-center mb-6">
+        <h3 className="text-3xl md:text-5xl font-serif font-light tracking-wide text-stone-900 mb-3">
+          {item.title}
+        </h3>
+        <p className="text-stone-500 text-xs font-mono uppercase tracking-widest mb-6">
+          Before & After Renovation View
+        </p>
+        
+        {/* Before / After Buttons */}
+        <div className="inline-flex bg-stone-200 p-1 rounded-full shadow-inner">
+          <button 
+            onClick={() => setActiveTab("before")}
+            className={`px-6 py-2 rounded-full text-xs uppercase tracking-wider transition-all ${activeTab === "before" ? "bg-stone-900 text-white shadow-sm" : "text-stone-600 hover:text-stone-900"}`}
+          >
+            Before
+          </button>
+          <button 
+            onClick={() => setActiveTab("after")}
+            className={`px-6 py-2 rounded-full text-xs uppercase tracking-wider transition-all ${activeTab === "after" ? "bg-stone-900 text-white shadow-sm" : "text-stone-600 hover:text-stone-900"}`}
+          >
+            After
+          </button>
+        </div>
+      </div>
+
+      {/* Display Image based on active tab */}
+      <div className="relative h-[450px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-xl border border-stone-200 bg-stone-100">
+        <Image
+          src={activeTab === "before" ? item.before_image : item.after_image}
+          alt={item.title || "Makeover view"}
+          fill
+          sizes="(max-width: 1200px) 100vw, 1200px"
+          className="object-cover transition-all duration-500"
+        />
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [activeImage, setActiveImage] = useState("/projects/room renovation.webp");
-  
-  const [makeoverData, setMakeoverData] = useState(null);
-  const [activeTab, setActiveTab] = useState("after");
+  const [makeoverData, setMakeoverData] = useState<any[]>([]);
 
   useEffect(() => {
     fetch("https://sameeranaf.pythonanywhere.com/api/interior-makeover/")
       .then((res) => res.json())
       .then((data) => {
         if (data && data.length > 0) {
-          setMakeoverData(data[0]); 
+          setMakeoverData(data); // മുഴുവൻ അറേയും ഇവിടെ സേവ് ചെയ്യുന്നു
         }
       })
       .catch((err) => console.error("Error fetching makeover:", err));
@@ -170,45 +213,10 @@ export default function Home() {
           </div>
         </section>
 
-        {makeoverData && (
-          <section className="my-20">
-            <div className="text-center mb-6">
-              <h3 className="text-3xl md:text-5xl font-serif font-light tracking-wide text-stone-900 mb-3">
-                {makeoverData.title}
-              </h3>
-              <p className="text-stone-500 text-xs font-mono uppercase tracking-widest mb-6">
-                Before & After Renovation View
-              </p>
-              
-              {/* Before / After Buttons */}
-              <div className="inline-flex bg-stone-200 p-1 rounded-full shadow-inner">
-                <button 
-                  onClick={() => setActiveTab("before")}
-                  className={`px-6 py-2 rounded-full text-xs uppercase tracking-wider transition-all ${activeTab === "before" ? "bg-stone-900 text-white shadow-sm" : "text-stone-600 hover:text-stone-900"}`}
-                >
-                  Before
-                </button>
-                <button 
-                  onClick={() => setActiveTab("after")}
-                  className={`px-6 py-2 rounded-full text-xs uppercase tracking-wider transition-all ${activeTab === "after" ? "bg-stone-900 text-white shadow-sm" : "text-stone-600 hover:text-stone-900"}`}
-                >
-                  After
-                </button>
-              </div>
-            </div>
-
-            {/* Display Image based on active tab */}
-            <div className="relative h-[450px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-xl border border-stone-200 bg-stone-100">
-              <Image
-                src={activeTab === "before" ? makeoverData.before_image : makeoverData.after_image}
-                alt="Makeover view"
-                fill
-                sizes="(max-width: 1200px) 100vw, 1200px"
-                className="object-cover transition-all duration-500"
-              />
-            </div>
-          </section>
-        )}
+        {/* Dynamic Makeover Sections (Stacked Vertically) */}
+        {makeoverData.map((item, index) => (
+          <MakeoverCard key={index} item={item} />
+        ))}
 
         {/* --- Modern Coastal Bedroom Renovation Interactive Gallery Section --- */}
         <section className="my-20">
