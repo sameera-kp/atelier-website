@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#fcfbf9] text-stone-900 antialiased min-h-screen flex flex-col justify-between">
+      <body className="bg-[#f5f2eb] text-stone-900 antialiased min-h-screen flex flex-col justify-between">
         <div>
           <Navbar />
           <div>

@@ -4,12 +4,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <header className="w-full bg-[#fcfbf9] border-b border-stone-200">
-      {/* Promo Bar */}
-      <div className="bg-[#d2c199] text-stone-900 text-center text-xs py-2 font-medium uppercase tracking-wider">
-        Save 20% On New Interior Projects — <span className="underline cursor-pointer font-bold">Book Consult</span>
-      </div>
-
+    <header className="w-full bg-[#f5f2eb] border-b border-stone-200 sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
       {/* Main Nav */}
       <nav className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
         
@@ -28,21 +23,21 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Links */}
-        <div className="hidden md:flex items-center space-x-8 text-xs font-medium tracking-widest uppercase text-stone-700">
+        {/* Links (Centered/Spaced for luxury look) */}
+        <div className="hidden md:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase text-stone-700">
+          <Link href="/about" className="hover:text-stone-950 transition-colors">About Us</Link>
           <Link href="/projects" className="hover:text-stone-950 transition-colors">Portfolio</Link>
-          <Link href="/about" className="hover:text-stone-950 transition-colors">About</Link>
-          <Link href="/contact" className="hover:text-stone-950 transition-colors">Contact</Link>
+          <Link href="/contact" className="hover:text-stone-950 transition-colors">Contact Us</Link>
           <Link href="/login" className="hover:text-stone-950 transition-colors">Login</Link>
         </div>
 
-        {/* Action Button */}
+        {/* Action Button matching the inspiration layout */}
         <div className="flex items-center space-x-4">
-          <Link href="/register" className="hidden sm:inline-block text-xs uppercase tracking-widest text-stone-700 hover:text-stone-950 transition-colors">
-            Register
-          </Link>
-          <Link href="/contact" className="bg-stone-900 text-stone-100 text-xs uppercase tracking-widest px-5 py-2.5 rounded-sm hover:bg-stone-800 transition-colors">
-            Get Started
+          <Link 
+            href="/contact" 
+            className="border border-stone-900 text-stone-900 bg-transparent hover:bg-stone-900 hover:text-white text-xs uppercase tracking-widest px-6 py-2.5 transition-all duration-300 font-medium"
+          >
+            Free Consultation
           </Link>
         </div>
       </nav>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/projects";
@@ -15,7 +15,30 @@ const sampleImages = [
   "/projects/Living-Room-Dining-Room-5.webp",
 ];
 
-// தனிത്തനി മേക്കോവർ കാർഡുകൾക്കായി ഒരു ചെറിയ കോമ്പോണന്റ്
+const heroSlides = [
+  {
+    type: "video",
+    media: "/projects/banner vedio.mp4",
+    title: "OUR REAL INTERIOR",
+    subtitle: "DESIGN MAKEOVERS",
+    desc: "We design minimal, luxury residential and commercial spaces that harmonize functionality with modern aesthetic values.",
+  },
+  {
+    type: "image",
+    media: "/projects/cozy bedroom.jpg",
+    title: "MODERN ARCHITECTURAL",
+    subtitle: "LIVING SPACES",
+    desc: "Crafting bespoke interiors with exquisite detailing, premium materials, and timeless elegance.",
+  },
+  {
+    type: "image",
+    media: "/projects/banner1.jpg",
+    title: "LUXURY FIT-OUTS &",
+    subtitle: "BESPOKE INTERIORS",
+    desc: "Transforming ordinary rooms into extraordinary lifestyle statements tailored to your vision.",
+  },
+];
+
 function MakeoverCard({ item }: { item: any }) {
   const [activeTab, setActiveTab] = useState("after");
 
@@ -63,73 +86,124 @@ function MakeoverCard({ item }: { item: any }) {
 export default function Home() {
   const [activeImage, setActiveImage] = useState("/projects/room renovation.webp");
   const [makeoverData, setMakeoverData] = useState<any[]>([]);
+  
+  // Hero Slider State
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-slide effect every 6 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     fetch("https://sameeranaf.pythonanywhere.com/api/interior-makeover/")
       .then((res) => res.json())
       .then((data) => {
         if (data && data.length > 0) {
-          setMakeoverData(data); // മുഴുവൻ അറേയും ഇവിടെ സേവ് ചെയ്യുന്നു
+          setMakeoverData(data); 
         }
       })
       .catch((err) => console.error("Error fetching makeover:", err));
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#fcfbf9] text-stone-900">
-      {/* Full-width Image Hero Banner */}
-      <section className="relative w-full h-[85vh] min-h-[600px] flex items-center justify-center text-center overflow-hidden">
-        <Image
-          src="/projects/banner1.jpg" 
-          alt="Interior Design Makeovers"
-          fill
-          priority
-          className="object-cover brightness-[0.65]"
-        />
-
-        <div className="relative z-10 max-w-4xl px-6 flex flex-col items-center space-y-6 text-white">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-7xl font-serif-heading font-light tracking-tight leading-tight drop-shadow-md"
-          >
-            OUR REAL INTERIOR <br />
-            <span className="italic font-normal">DESIGN MAKEOVERS</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl font-light tracking-wide text-neutral-200 max-w-2xl drop-shadow"
-          >
-            We design minimal, luxury residential and commercial spaces that
-            harmonize functionality with modern aesthetic values.
-          </motion.p>
-
+    <main className="min-h-screen bg-[#f5f2eb] text-stone-900">
+      {/* Hero Section with Video/Image Slider & Stats Cards */}
+      <section className="relative w-full h-[90vh] min-h-[700px] flex flex-col justify-between text-center overflow-hidden bg-stone-950">
+        {/* Background Slider (Video or Image) */}
+        <AnimatePresence mode="wait">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="pt-4 flex flex-col sm:flex-row items-center gap-4"
+            key={currentSlide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 w-full h-full"
           >
-            <Link
-              href="/projects"
-              className="px-8 py-3.5 bg-white text-stone-900 text-xs font-mono uppercase tracking-widest hover:bg-neutral-200 transition-all shadow-lg"
-            >
-              Explore Projects
-            </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-3.5 border border-white text-white text-xs font-mono uppercase tracking-widest hover:bg-white/10 transition-all backdrop-blur-sm"
-            >
-              Book Consult
-            </Link>
+            {heroSlides[currentSlide].type === "video" ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover brightness-[0.55]"
+              >
+                <source src={heroSlides[currentSlide].media} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <Image
+                src={heroSlides[currentSlide].media} 
+                alt="Interior Design Makeovers"
+                fill
+                priority
+                className="object-cover brightness-[0.55]"
+              />
+            )}
           </motion.div>
+        </AnimatePresence>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-4xl mx-auto px-6 pt-28 flex flex-col items-center space-y-6 text-white flex-grow justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col items-center space-y-6"
+            >
+              <h1 className="text-4xl md:text-7xl font-serif-heading font-light tracking-tight leading-tight drop-shadow-md">
+                {heroSlides[currentSlide].title} <br />
+                <span className="italic font-normal">{heroSlides[currentSlide].subtitle}</span>
+              </h1>
+
+              <p className="text-lg md:text-xl font-light tracking-wide text-neutral-200 max-w-2xl drop-shadow">
+                {heroSlides[currentSlide].desc}
+              </p>
+
+              <div className="pt-2 flex flex-col sm:flex-row items-center gap-4">
+                <Link
+                  href="/projects"
+                  className="px-8 py-3.5 bg-white text-stone-900 text-xs font-mono uppercase tracking-widest hover:bg-neutral-200 transition-all shadow-lg font-medium"
+                >
+                  Explore Projects
+                </Link>
+                <Link
+                  href="/contact"
+                  className="px-8 py-3.5 border border-white text-white text-xs font-mono uppercase tracking-widest hover:bg-white/10 transition-all backdrop-blur-sm font-medium"
+                >
+                  Book Consult
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#fcfbf9] to-transparent pointer-events-none" />
+        {/* Bottom Stats Grid (Fully Visible & Styled with Golden Tone) */}
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-6 hidden md:grid grid-cols-4 gap-4 border-t border-[#d2c199]/40 pt-6">
+          <div className="text-center border-r border-[#d2c199]/30 last:border-none">
+            <h4 className="text-2xl md:text-3xl font-serif font-light text-[#d2c199] drop-shadow-md">6</h4>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-[#d2c199] mt-1 drop-shadow font-medium">Countries Operating</p>
+          </div>
+          <div className="text-center border-r border-[#d2c199]/30 last:border-none">
+            <h4 className="text-2xl md:text-3xl font-serif font-light text-[#d2c199] drop-shadow-md">500+</h4>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-[#d2c199] mt-1 drop-shadow font-medium">Projects Done</p>
+          </div>
+          <div className="text-center border-r border-[#d2c199]/30 last:border-none">
+            <h4 className="text-2xl md:text-3xl font-serif font-light text-[#d2c199] drop-shadow-md">17+</h4>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-[#d2c199] mt-1 drop-shadow font-medium">Years Since 2008</p>
+          </div>
+          <div className="text-center">
+            <h4 className="text-2xl md:text-3xl font-serif font-light text-[#d2c199] drop-shadow-md">100%</h4>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-[#d2c199] mt-1 drop-shadow font-medium">Full Turnkey</p>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#fcfbf9] to-transparent pointer-events-none" />
       </section>
 
       {/* Main Container Content */}
