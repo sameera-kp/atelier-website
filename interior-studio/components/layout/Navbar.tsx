@@ -29,6 +29,7 @@ export default function Navbar() {
           <Link href="/projects" className="hover:text-stone-950 transition-colors">Portfolio</Link>
           <Link href="/contact" className="hover:text-stone-950 transition-colors">Contact Us</Link>
           <Link href="/login" className="hover:text-stone-950 transition-colors">Login</Link>
+          <Link href="/register" className="hover:text-stone-950 transition-colors">Register</Link>
         </div>
 
         {/* Action Button matching the inspiration layout */}
