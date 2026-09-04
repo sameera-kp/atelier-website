@@ -6,8 +6,8 @@ import { useState } from "react";
 export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // ഉദാഹരണത്തിന് സെർച്ച് ചെയ്യാവുന്ന കുറച്ച് പേജുകളും പ്രോജക്റ്റുകളും
   const searchItems = [
     { name: "About Us", href: "/about" },
     { name: "Portfolio / Projects", href: "/projects" },
@@ -17,7 +17,6 @@ export default function Navbar() {
     { name: "Free Consultation", href: "/contact" },
   ];
 
-  // യൂസർ ടൈപ്പ് ചെയ്യുന്നത് വെച്ച് ഫിൽട്ടർ ചെയ്യുക
   const filteredItems = searchItems.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -25,25 +24,25 @@ export default function Navbar() {
   return (
     <>
       <header className="w-full bg-[#f5f2eb] border-b border-stone-200 sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
-        <nav className="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+        <nav className="max-w-7xl mx-auto px-4 md:px-12 h-20 flex items-center justify-between">
           
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 border border-stone-900 bg-stone-900 text-white flex items-center justify-center font-serif text-base font-bold transition-colors group-hover:bg-transparent group-hover:text-stone-900">
+          <Link href="/" className="flex items-center gap-2 md:gap-3 group">
+            <div className="w-8 h-8 md:w-9 md:h-9 border border-stone-900 bg-stone-900 text-white flex items-center justify-center font-serif text-sm md:text-base font-bold transition-colors group-hover:bg-transparent group-hover:text-stone-900">
               A
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-normal tracking-[0.2em] uppercase font-serif-heading text-stone-900 leading-none">
+              <span className="text-base md:text-lg font-normal tracking-[0.2em] uppercase font-serif-heading text-stone-900 leading-none">
                 Atelier
               </span>
-              <span className="text-[9px] font-mono tracking-[0.35em] text-stone-500 uppercase mt-1">
+              <span className="text-[8px] md:text-[9px] font-mono tracking-[0.35em] text-stone-500 uppercase mt-1">
                 Design
               </span>
             </div>
           </Link>
 
-          {/* Links */}
-          <div className="hidden md:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase text-stone-700">
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center space-x-8 lg:space-x-10 text-xs font-medium tracking-widest uppercase text-stone-700">
             <Link href="/about" className="hover:text-stone-950 transition-colors">About Us</Link>
             <Link href="/projects" className="hover:text-stone-950 transition-colors">Portfolio</Link>
             <Link href="/contact" className="hover:text-stone-950 transition-colors">Contact Us</Link>
@@ -51,8 +50,8 @@ export default function Navbar() {
             <Link href="/register" className="hover:text-stone-950 transition-colors">Register</Link>
           </div>
 
-          {/* Action Buttons & Search */}
-          <div className="flex items-center space-x-6">
+          {/* Action Buttons, Search & Mobile Toggle */}
+          <div className="flex items-center space-x-4 md:space-x-6">
             <button 
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search"
@@ -63,20 +62,86 @@ export default function Navbar() {
               </svg>
             </button>
 
+            {/* Desktop Consultation Button */}
             <Link 
               href="/contact" 
-              className="border border-stone-900 text-stone-900 bg-transparent hover:bg-stone-900 hover:text-white text-xs uppercase tracking-widest px-6 py-2.5 transition-all duration-300 font-medium"
+              className="hidden lg:inline-block border border-stone-900 text-stone-900 bg-transparent hover:bg-stone-900 hover:text-white text-xs uppercase tracking-widest px-6 py-2.5 transition-all duration-300 font-medium"
             >
               Free Consultation
             </Link>
+
+            {/* Mobile Menu Hamburger Button */}
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden text-stone-900 p-1 focus:outline-none cursor-pointer"
+              aria-label="Toggle Menu"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                )}
+              </svg>
+            </button>
           </div>
         </nav>
+
+        {/* Mobile Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-[#f5f2eb] border-b border-stone-200 px-6 py-6 space-y-4 animate-in slide-in-from-top duration-200 shadow-lg">
+            <Link 
+              href="/about" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-medium tracking-widest uppercase text-stone-700 hover:text-stone-950 py-1"
+            >
+              About Us
+            </Link>
+            <Link 
+              href="/projects" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-medium tracking-widest uppercase text-stone-700 hover:text-stone-950 py-1"
+            >
+              Portfolio
+            </Link>
+            <Link 
+              href="/contact" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-medium tracking-widest uppercase text-stone-700 hover:text-stone-950 py-1"
+            >
+              Contact Us
+            </Link>
+            <Link 
+              href="/login" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-medium tracking-widest uppercase text-stone-700 hover:text-stone-950 py-1"
+            >
+              Login
+            </Link>
+            <Link 
+              href="/register" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block text-xs font-medium tracking-widest uppercase text-stone-700 hover:text-stone-950 py-1"
+            >
+              Register
+            </Link>
+            <div className="pt-2">
+              <Link 
+                href="/contact" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block text-center border border-stone-900 text-stone-900 bg-transparent hover:bg-stone-900 hover:text-white text-xs uppercase tracking-widest py-3 transition-all font-medium"
+              >
+                Free Consultation
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Functional Search Modal Overlay */}
       {isSearchOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-32 px-4">
-          <div className="bg-[#f5f2eb] w-full max-w-2xl p-6 border border-stone-300 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-24 md:pt-32 px-4">
+          <div className="bg-[#f5f2eb] w-full max-w-2xl p-5 md:p-6 border border-stone-300 shadow-2xl relative">
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs uppercase tracking-widest text-stone-600 font-medium">Search Atelier</span>
               <button 
@@ -93,7 +158,7 @@ export default function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Type to search pages, sections..." 
-                className="w-full bg-transparent text-stone-950 placeholder-stone-400 text-lg focus:outline-none font-serif"
+                className="w-full bg-transparent text-stone-950 placeholder-stone-400 text-base md:text-lg focus:outline-none font-serif"
                 autoFocus
               />
             </div>
